@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class on_update : MonoBehaviour {
+public class Update_plats : MonoBehaviour {
 	private Rigidbody rb;
 	private BoxCollider collided;
 	// Use this for initialization

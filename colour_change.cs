@@ -3,9 +3,11 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class colour_change : MonoBehaviour {
-	public on_update script;
+	public Update_plats Update_plats;
+	public Update_intrs Update_intrs;
 	public Light lite;
-	public Transform interacts;
+	public Transform Platforms;
+	public Transform Interacts;
 //	public Text col_text;
 	// Use this for initialization
 	void Start () {
@@ -33,7 +35,7 @@ public class colour_change : MonoBehaviour {
 
 	void update_objects() 
 	{
-		foreach (Transform rend in interacts) {
+		foreach (Transform rend in Platforms) {
 			string cooler = rend.tag;
 			if (cooler == "white")
 				rend.GetComponent<Renderer>().material.color = lite.color;
@@ -51,7 +53,27 @@ public class colour_change : MonoBehaviour {
 				update_c (rend);
 			if (cooler == "black")
 				update_black (rend);
-			script.on_change (rend);
+			Update_plats.on_change (rend);
+		}
+		foreach (Transform rend in Interacts) {
+			string cooler = rend.tag;
+			if (cooler == "white")
+				rend.GetComponent<Renderer>().material.color = lite.color;
+			if (cooler == "red")
+				update_r (rend);
+			if (cooler == "blue")
+				update_b (rend);
+			if (cooler == "green")
+				update_g (rend);
+			if (cooler == "yellow")
+				update_y (rend);
+			if (cooler == "magenta")
+				update_m (rend);
+			if (cooler == "cyan")
+				update_c (rend);
+			if (cooler == "black")
+				update_black (rend);
+			Update_intrs.on_change (rend);
 		}
 	}
 
@@ -154,9 +176,9 @@ public class colour_change : MonoBehaviour {
 		if (lite.color == Color.red)
 			rend.GetComponent<Renderer> ().material.color = Color.cyan;
 		if (lite.color == Color.green)
-			rend.GetComponent<Renderer> ().material.color = Color.yellow;
-		if (lite.color == Color.blue)
 			rend.GetComponent<Renderer> ().material.color = Color.magenta;
+		if (lite.color == Color.blue)
+			rend.GetComponent<Renderer> ().material.color = Color.yellow;
 	}
 
 	// Update is called once per frame
@@ -172,6 +194,10 @@ public class colour_change : MonoBehaviour {
 			update_objects ();
 		} else if (Input.GetKeyDown (KeyCode.B)) {
 			lite.color = Color.green;
+			update_objects ();
+		}
+		  else if (Input.GetKeyDown (KeyCode.N)) {
+			lite.color = Color.white;
 			update_objects ();
 		}
 	}

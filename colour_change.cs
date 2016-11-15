@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -8,29 +8,36 @@ public class colour_change : MonoBehaviour {
 	public Light lite;
 	public Transform Platforms;
 	public Transform Interacts;
-//	public Text col_text;
+
+	public bool enabled;
+	public bool r_enabled;
+	public bool b_enabled;
+	public bool g_enabled;
+	public bool rclick_enabled;
+
+	//	public Text col_text;
 	// Use this for initialization
 	void Start () {
 		lite.color = Color.white;
 		update_objects();
-	//	col_text.text = "Current Lens: White";
+		//	col_text.text = "Current Lens: White";
 	}
 
 	void change()
 	{
-		
+
 		if (lite.color == Color.white) {
 			lite.color = Color.red;
-//			col_text.text = "Current Lens: Red";
+			//			col_text.text = "Current Lens: Red";
 		} else if (lite.color == Color.red) {
 			lite.color = Color.green;
-//			col_text.text = "Current Lens: Green";
+			//			col_text.text = "Current Lens: Green";
 		} else if (lite.color == Color.green) {
 			lite.color = Color.blue;
-//			col_text.text = "Current Lens: Blue";
+			//			col_text.text = "Current Lens: Blue";
 		} else if (lite.color == Color.blue) {
 			lite.color = Color.white;
-//			col_text.text = "Current Lens: White";
+			//			col_text.text = "Current Lens: White";
 		}
 	}
 
@@ -60,8 +67,10 @@ public class colour_change : MonoBehaviour {
 		}
 		foreach (Transform rend in Interacts) {
 			string cooler = rend.tag;
-			if (cooler == "white")
-				rend.GetComponent<Renderer>().material.color = lite.color;
+			if (cooler == "white") {
+				rend.GetComponent<Renderer> ().material.color = lite.color;
+				rend.GetComponent<Renderer> ().material.SetColor("_EmissionColor", lite.color);
+			}
 			if (cooler == "red")
 				update_r (rend);
 			if (cooler == "blue")
@@ -243,23 +252,24 @@ public class colour_change : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Mouse2)) {
-			change ();
-			update_objects ();
-		} else if (Input.GetKeyDown (KeyCode.C)) {
-			lite.color = Color.red;
-			update_objects ();
-		} else if (Input.GetKeyDown (KeyCode.V)) {
-			lite.color = Color.blue;
-			update_objects ();
-		} else if (Input.GetKeyDown (KeyCode.B)) {
-			lite.color = Color.green;
-			update_objects ();
-		}
-		  else if (Input.GetKeyDown (KeyCode.N)) {
-			lite.color = Color.white;
-			update_objects ();
+		if (enabled) {
+			if (Input.GetKeyDown (KeyCode.Mouse1) && rclick_enabled) {
+				change ();
+				update_objects ();
+			} else if (Input.GetKeyDown (KeyCode.C) && r_enabled) {
+				lite.color = Color.red;
+				update_objects ();
+			} else if (Input.GetKeyDown (KeyCode.V) && b_enabled) {
+				lite.color = Color.blue;
+				update_objects ();
+			} else if (Input.GetKeyDown (KeyCode.B) && g_enabled) {
+				lite.color = Color.green;
+				update_objects ();
+			} else if (Input.GetKeyDown (KeyCode.N)) {
+				lite.color = Color.white;
+				update_objects ();
+			}
 		}
 	}
-	
+
 }

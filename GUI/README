@@ -1,0 +1,8 @@
+README
+
+To use this extension, import it into Unity using the custom package import.
+No further setup should be required. If it is, simply place the image files into
+their respective sprite slots.
+
+Should there not be a Canvas object, create one with a child Image named reticle,
+and a child image named color_checker.

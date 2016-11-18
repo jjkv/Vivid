@@ -13,7 +13,7 @@ public class colour_change : MonoBehaviour {
 	public bool r_enabled;
 	public bool b_enabled;
 	public bool g_enabled;
-	public bool rclick_enabled;
+	public bool click_enabled;
 
 	//	public Text col_text;
 	// Use this for initialization
@@ -22,22 +22,63 @@ public class colour_change : MonoBehaviour {
 		update_objects();
 		//	col_text.text = "Current Lens: White";
 	}
+		
 
-	void change()
+	void change_forward()
 	{
-
 		if (lite.color == Color.white) {
-			lite.color = Color.red;
-			//			col_text.text = "Current Lens: Red";
+			if (r_enabled) {
+				lite.color = Color.red;
+			} else if (g_enabled) {
+				lite.color = Color.green;
+			} else if (b_enabled) {
+				lite.color = Color.blue;
+			}
 		} else if (lite.color == Color.red) {
-			lite.color = Color.green;
-			//			col_text.text = "Current Lens: Green";
+			if (g_enabled) {
+				lite.color = Color.green;
+			} else if (b_enabled) {
+				lite.color = Color.blue;
+			} else {
+				lite.color = Color.white;
+			}
 		} else if (lite.color == Color.green) {
-			lite.color = Color.blue;
-			//			col_text.text = "Current Lens: Blue";
+			if (b_enabled) {
+				lite.color = Color.blue;
+			} else {
+				lite.color = Color.white;
+			}
 		} else if (lite.color == Color.blue) {
 			lite.color = Color.white;
-			//			col_text.text = "Current Lens: White";
+		}
+	}
+
+	void change_backward()
+	{
+		if (lite.color == Color.white) {
+			if (b_enabled) {
+				lite.color = Color.blue;
+			} else if (g_enabled) {
+				lite.color = Color.green;
+			} else if (r_enabled) {
+				lite.color = Color.red;
+			}
+		} else if (lite.color == Color.blue) {
+			if (g_enabled) {
+				lite.color = Color.green;
+			} else if (r_enabled) {
+				lite.color = Color.red;
+			} else {
+				lite.color = Color.white;
+			}
+		} else if (lite.color == Color.green) {
+			if (r_enabled) {
+				lite.color = Color.red;
+			} else {
+				lite.color = Color.white;
+			}
+		} else if (lite.color == Color.red) {
+			lite.color = Color.white;
 		}
 	}
 
@@ -253,8 +294,11 @@ public class colour_change : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (enabled) {
-			if (Input.GetKeyDown (KeyCode.Mouse1) && rclick_enabled) {
-				change ();
+			if (Input.GetKeyDown (KeyCode.Mouse1) && click_enabled) {
+				change_backward ();
+				update_objects ();
+			} else if (Input.GetKeyDown (KeyCode.Mouse0) && click_enabled) {
+				change_forward ();
 				update_objects ();
 			} else if (Input.GetKeyDown (KeyCode.C) && r_enabled) {
 				lite.color = Color.red;
@@ -271,5 +315,4 @@ public class colour_change : MonoBehaviour {
 			}
 		}
 	}
-
 }

@@ -35,8 +35,6 @@ public class Update_intrs : MonoBehaviour {
 			yellow_phys (rend);
 		else if (obj_color == Color.black)
 			black_phys (rend);
-
-
 	}
 
 	void restore( Transform rend)

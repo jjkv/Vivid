@@ -54,6 +54,7 @@ public class Update_plats : MonoBehaviour {
 
 	}
 
+	// bounce
 	void red_phys(Transform rend)
 	{
 
@@ -62,27 +63,22 @@ public class Update_plats : MonoBehaviour {
 		collided.material.bounceCombine = PhysicMaterialCombine.Maximum;
 	}
 
+	// speed
 	void blue_phys(Transform rend)
 	{
-		collided.material = new PhysicMaterial("slide");
-		collided.material.dynamicFriction = 0.0f;
-		collided.material.staticFriction = 0.0f;
-		collided.material.frictionCombine = PhysicMaterialCombine.Minimum;
-
 		script.triggerCollision ();
 	}
 
+	// holo
 	void green_phys(Transform rend)
 	{
-		script.triggerCollision ();
+		collided.isTrigger = true;
 	}
 
-	//holographic
+	// sticky
 	void yellow_phys(Transform rend)
 	{
-
-		collided.isTrigger = true;
-
+		script.triggerCollision ();
 	}
 
 	//stop moving
@@ -91,8 +87,14 @@ public class Update_plats : MonoBehaviour {
 		rb.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
+	// slide
 	void magenta_phys(Transform rend)
 	{
+		collided.material = new PhysicMaterial("slide");
+		collided.material.dynamicFriction = 0.0f;
+		collided.material.staticFriction = 0.0f;
+		collided.material.frictionCombine = PhysicMaterialCombine.Minimum;
+
 		script.triggerCollision ();
 	}
 

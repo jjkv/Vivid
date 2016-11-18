@@ -1,0 +1,23 @@
+here's how this stuff works:
+the game manager script can be applied to an empty game object; it doesn't need
+any tags, colliders, anything. what the script does need is a reference to the
+player, so just drag the player capsule into the appropriate field. the script
+has a scenes array, and in the function loadSceneArray, you will have to 
+hardcode the names of each scene into the array. two important things to note
+here: the scenes that you load into the array must be loaded into the build 
+settings (do this with File->Build Settings then click Add Open Scenes), AND
+the order of scenes in the array must match the order of scenes in the build
+settings EXACTLY.
+in dropbox, i have uploaded an asset package to import called
+gamaManagerUpdate. this package has the prefabs and scripts you will need to
+create levels with the game manager. it's unclear to me at this time weather or
+not scenes can be shared as prefabs, we'll see if that works i suppose.
+to actually trigger scene changes, there are two important game objects that
+need to be created. i implemented death/respawn as a large plane (100 x 100)
+located at -40 y below the lowest point in your scene. this plane needs 
+the tag "Respawn." you'll probably want to turn off the mesh renderer so the 
+plane is invisible, but be careful not to also turn off the mesh collider,
+else the respawn function won't work. to transition between scenes, make an
+game object with any collider and tag is as "Continue" (this tag isn't default,
+so make your own if you have to). when the player collides with an object 
+tagged "Continue," the next scene in the list will be loaded.

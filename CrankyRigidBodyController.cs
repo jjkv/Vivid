@@ -6,7 +6,10 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class CrankyRigidBodyController : MonoBehaviour
 {
+	public bool isDead = false;
+	public bool isFinished = false;
 
+	// used to initiate moveMngr behaviors
 	public void triggerCollision () {
 		Vector3 currPos = transform.position;
 		GetComponent<Rigidbody> ().position = new Vector3 (currPos.x, (currPos.y + 0.03f), currPos.z);
@@ -279,6 +282,14 @@ public class CrankyRigidBodyController : MonoBehaviour
 		// keep track of collision objects and contact points
 		collisions.Add(collision.gameObject);
 		contactPoints.Add(collision.gameObject.GetInstanceID(), collision.contacts);
+
+		if (collision.gameObject.tag == "Respawn") {
+			isDead = true;
+		}
+
+		if (collision.gameObject.tag == "Continue") {
+			isFinished = true;
+		}
 
 		// check if this object is dynamic
 		if (!collision.gameObject.isStatic)

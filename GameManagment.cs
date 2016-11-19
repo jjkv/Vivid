@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManagment : MonoBehaviour {
+	public bool paused = false;
+	public Canvas pauseUI;
 
 	public int numScenes = 4;
 	public string[] scenes;
@@ -39,5 +41,49 @@ public class GameManagment : MonoBehaviour {
 			player.isDead = false;
 			load (curr_scene);
 		}
+
+		if (Input.GetKey (KeyCode.Escape)) {
+			if (!paused) {
+				pauseUI.enabled = true;
+				paused = true;
+				Time.timeScale = 0f;
+			} else {
+				pauseUI.enabled = false;
+				paused = false;
+				Time.timeScale = 1f;
+			}
+		}
 	}
+
+	/* MAIN MENU BUTTON FUNCTIONS!!! */
+
+	public void exit_button() {
+		Application.Quit ();
+	}
+
+	public void newg_button() {
+		SceneManager.LoadScene(scenes[0]);
+	}
+
+	public void cont_button() {
+		SceneManager.LoadScene(scenes[3]);
+	}
+
+	public void opt_button() {
+		/* load options scene */
+	}
+
+	/* PAUSE MENU BUTTON FUNCTIONS */
+	public void resume_button() {
+		Time.timeScale = 1;
+	}
+
+	public void resest_button() {
+		load (SceneManager.GetActiveScene ().buildIndex);
+	}
+
+	public void mMenu_button() {
+		/* load main menu scene */
+	}
+
 }

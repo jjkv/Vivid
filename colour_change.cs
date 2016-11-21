@@ -23,7 +23,8 @@ public class colour_change : MonoBehaviour {
 		//	col_text.text = "Current Lens: White";
 	}
 		
-
+	//cycles 'forward' in light color cycle
+	//w->r->g->b->w
 	void change_forward()
 	{
 		if (lite.color == Color.white) {
@@ -53,6 +54,8 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
+	//cycles 'backward' in light color cycle
+	//w->b->g->r->w
 	void change_backward()
 	{
 		if (lite.color == Color.white) {
@@ -82,6 +85,7 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
+	//
 	void update_objects() 
 	{
 		foreach (Transform rend in Platforms) {
@@ -130,6 +134,7 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
+	//
 	void restore_color(Transform rend)
 	{
 		if (rend.tag == "white") {
@@ -165,6 +170,8 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.black);
 		}
 	}
+
+	//
 	void update_r(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -183,6 +190,7 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
+	//
 	void update_b(Transform rend)
 	{
 		if (lite.color == Color.white){

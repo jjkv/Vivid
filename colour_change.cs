@@ -134,7 +134,8 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//
+	// restoers object color to base
+	//consider just parsing strings instead
 	void restore_color(Transform rend)
 	{
 		if (rend.tag == "white") {
@@ -171,7 +172,7 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//
+	//cycles color for red objects
 	void update_r(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -190,7 +191,7 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//
+	//cycles color for blue objects
 	void update_b(Transform rend)
 	{
 		if (lite.color == Color.white){
@@ -211,6 +212,7 @@ public class colour_change : MonoBehaviour {
 
 	}
 
+	//cycles color for green objects
 	void update_g(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -229,6 +231,7 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
+	//cycles color for yellow objects
 	void update_y(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -246,6 +249,8 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.black);
 		}
 	}
+
+	//cycles color for cyan objects	
 	void update_c(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -263,7 +268,8 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.green);
 		}
 	}
-	//magenta
+
+	//cycles color for magenta objects
 	void update_m(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -281,6 +287,8 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.red);
 		}
 	}
+
+	//cycles color for black objects	
 	void update_black(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -300,6 +308,7 @@ public class colour_change : MonoBehaviour {
 	}
 
 	// Update is called once per frame
+	//look for key input, update objects on correct input.
 	void Update () {
 		if (enabled) {
 			if (Input.GetKeyDown (KeyCode.Mouse1) && click_enabled) {

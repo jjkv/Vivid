@@ -1,3 +1,8 @@
+//Script for updating 'platforms'
+//Objects which ignore gravity and ignore external forces.
+//Script handles switching between physics properties
+//of the objects based on their 'color'
+//on_change is called by the colour_change script.
 using UnityEngine;
 using System.Collections;
 
@@ -16,6 +21,9 @@ public class Update_plats : MonoBehaviour {
 
 	}
 
+	//called by colour_change, passed the transform 'rend' of an object
+	//resets the objects physics to base for the plats type
+	//calls appropriate physics func based on the objects color.
 	public void on_change(Transform rend)
 	{
 		script.enabled = true;
@@ -29,7 +37,7 @@ public class Update_plats : MonoBehaviour {
 
 		collided.material = new PhysicMaterial ("init");
 		if (obj_color == Color.white)
-			white_phys (rend);
+			return;
 		else if (obj_color == Color.red)
 			red_phys (rend);
 		else if (obj_color == Color.blue)
@@ -43,17 +51,20 @@ public class Update_plats : MonoBehaviour {
 		else if (obj_color == Color.yellow)
 			yellow_phys (rend);
 		else if (obj_color == Color.black)
-			black_phys (rend);
+			return;
 	}
 
-	void white_phys(Transform rend)
+	/*void restore(transform rend)
 	{
-
-
-
-
+		script.enabled = true;
+		script.MovementSpeed = 7.0f;
+		rb = rend.GetComponent <Rigidbody> ();
+		collided = rend.GetComponent<BoxCollider> ();
+		collided.isTrigger = false;
+		rb.constraints = RigidbodyConstraints.None;
+		rb.useGravity = true;
 	}
-
+	*/
 	// bounce
 	void red_phys(Transform rend)
 	{
@@ -69,7 +80,7 @@ public class Update_plats : MonoBehaviour {
 		script.triggerCollision ();
 	}
 
-	// holo
+	// holographic
 	void green_phys(Transform rend)
 	{
 		collided.isTrigger = true;
@@ -96,11 +107,5 @@ public class Update_plats : MonoBehaviour {
 		collided.material.frictionCombine = PhysicMaterialCombine.Minimum;
 
 		script.triggerCollision ();
-	}
-
-	void black_phys(Transform rend)
-	{
-
-
 	}
 }

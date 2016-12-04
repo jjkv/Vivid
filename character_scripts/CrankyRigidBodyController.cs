@@ -6,6 +6,10 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class CrankyRigidBodyController : MonoBehaviour
 {
+	public AudioSource jump_sound;
+	public AudioSource walk_loop;
+	private bool walking;
+
 	public bool isDead = false;
 	public bool isFinished = false;
 
@@ -63,6 +67,7 @@ public class CrankyRigidBodyController : MonoBehaviour
 
 	void Awake()
 	{  
+		walking = false;
 		movement = Vector3.zero;
 
 		grounded = false;
@@ -124,6 +129,18 @@ public class CrankyRigidBodyController : MonoBehaviour
 		inputX = Input.GetAxis("Horizontal");
 		inputY = Input.GetAxis("Vertical");
 
+		if ((inputX != 0.0f || inputY != 0.0f) && grounded) {
+			walking = true;
+		} else {
+			walking = false;
+		}
+
+		if (walking && !walk_loop.isPlaying) {
+			walk_loop.Play ();
+		} else if (!walking) {
+			walk_loop.Stop ();
+		}
+
 		// limit the length to 1.0f
 		float length = Mathf.Sqrt(inputX * inputX + inputY * inputY);
 
@@ -174,6 +191,7 @@ public class CrankyRigidBodyController : MonoBehaviour
 				// jump button was pressed, do jump      
 				movement.y = JumpSpeed - GetComponent<Rigidbody>().velocity.y;
 				doJump = 2;
+				jump_sound.Play ();
 			}
 
 			else if (!touchingDynamic && Mathf.Approximately(inputX + inputY, 0.0f) && doJump < 2)
@@ -182,6 +200,8 @@ public class CrankyRigidBodyController : MonoBehaviour
 
 			GetComponent<Rigidbody>().AddForce(new Vector3(movement.x, movement.y, movement.z), ForceMode.VelocityChange);
 			groundedLastFrame = true;
+
+
 		}
 
 		else

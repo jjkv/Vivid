@@ -1,0 +1,35 @@
+using UnityEngine;
+using System.Collections;
+
+public class flash : MonoBehaviour {
+
+       private Color sentinel;
+       public bool flashing;
+       public Light flashLight;
+
+       void Start () {
+       	    flashLight.range = 0;
+	    		     flashLight.intensity = 8;
+			     			  flashLight.bounceIntensity = 8;
+						  			     flashing = false;
+									     	      sentinel = Color.gray;
+										      	       flashLight.color = sentinel;
+											       }
+
+											       public void initFlash (Color c) {
+											       	      flashing = true;
+												      	       flashLight.color = c;
+													       			flashLight.range = 0;
+																}
+																
+																// Update is called once per frame
+																void Update () {
+																     if (flashing) {
+																     		   flashLight.range += 10;
+																		   		       if (flashLight.range >= 100) {
+																				       	  		       flashing = false;
+																							       		   flashLight.range = 0;
+																									   		      }
+																											       }
+																											       }
+}

@@ -3,28 +3,33 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class colour_change : MonoBehaviour {
+
+	// the call to update_objects in start is necessary, but i don't want flash to happen during start
+	private bool naive_flag;	
+	public flash flash_script;
+
 	public Update_plats Update_plats;
 	public Update_intrs Update_intrs;
 	public Light lite;
 	public Transform Platforms;
 	public Transform Interacts;
 
-	public bool enabled;
+	public bool this_enabled;
 	public bool r_enabled;
-	public bool b_enabled;
 	public bool g_enabled;
+	public bool b_enabled;
 	public bool click_enabled;
 
 	//	public Text col_text;
 	// Use this for initialization
 	void Start () {
+		naive_flag = false;
 		lite.color = Color.white;
 		update_objects();
 		//	col_text.text = "Current Lens: White";
 	}
 		
-	//cycles 'forward' in light color cycle
-	//w->r->g->b->w
+
 	void change_forward()
 	{
 		if (lite.color == Color.white) {
@@ -54,8 +59,6 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//cycles 'backward' in light color cycle
-	//w->b->g->r->w
 	void change_backward()
 	{
 		if (lite.color == Color.white) {
@@ -85,9 +88,13 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//
 	void update_objects() 
 	{
+		if (naive_flag) {
+			flash_script.initFlash (lite.color);
+		} else {
+			naive_flag = true;
+		}
 		foreach (Transform rend in Platforms) {
 			string cooler = rend.tag;
 			if (cooler == "white") {
@@ -134,8 +141,6 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	// restoers object color to base
-	//consider just parsing strings instead
 	void restore_color(Transform rend)
 	{
 		if (rend.tag == "white") {
@@ -171,8 +176,6 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.black);
 		}
 	}
-
-	//cycles color for red objects
 	void update_r(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -191,7 +194,6 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//cycles color for blue objects
 	void update_b(Transform rend)
 	{
 		if (lite.color == Color.white){
@@ -212,7 +214,6 @@ public class colour_change : MonoBehaviour {
 
 	}
 
-	//cycles color for green objects
 	void update_g(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -231,7 +232,6 @@ public class colour_change : MonoBehaviour {
 		}
 	}
 
-	//cycles color for yellow objects
 	void update_y(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -249,8 +249,6 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.black);
 		}
 	}
-
-	//cycles color for cyan objects	
 	void update_c(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -268,8 +266,7 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.green);
 		}
 	}
-
-	//cycles color for magenta objects
+	//magenta
 	void update_m(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -287,8 +284,6 @@ public class colour_change : MonoBehaviour {
 			rend.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", Color.red);
 		}
 	}
-
-	//cycles color for black objects	
 	void update_black(Transform rend)
 	{
 		if (lite.color == Color.white)
@@ -308,9 +303,8 @@ public class colour_change : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	//look for key input, update objects on correct input.
 	void Update () {
-		if (enabled) {
+		if (this_enabled) {
 			if (Input.GetKeyDown (KeyCode.Mouse1) && click_enabled) {
 				change_backward ();
 				update_objects ();

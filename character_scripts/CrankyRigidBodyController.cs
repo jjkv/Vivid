@@ -6,6 +6,10 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class CrankyRigidBodyController : MonoBehaviour
 {
+	private Color collided_c;
+	private Color sentinel;
+
+	public audioCollisionMngr sounds;
 	public AudioSource jump_sound;
 	public AudioSource walk_loop;
 	private bool walking;
@@ -66,7 +70,9 @@ public class CrankyRigidBodyController : MonoBehaviour
 	private float capsuleRadius;
 
 	void Awake()
-	{  
+	{
+		sentinel = Color.gray;
+		collided_c = sentinel;
 		walking = false;
 		movement = Vector3.zero;
 
@@ -318,6 +324,9 @@ public class CrankyRigidBodyController : MonoBehaviour
 		// reset the jump state if able
 		if (doJump == 3)
 			doJump = 0;
+		
+		collided_c = collision.gameObject.GetComponent<Renderer> ().material.color;
+		sounds.playColorClip (collided_c);
 	}
 
 	void OnCollisionStay(Collision collision)
@@ -341,6 +350,9 @@ public class CrankyRigidBodyController : MonoBehaviour
 				touchingDynamic = true;
 		}
 
+
+		sounds.stopColorClip (collided_c);
+		collided_c = sentinel;
 		contactPoints.Remove(collision.gameObject.GetInstanceID());
 	}
 

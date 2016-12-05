@@ -6,6 +6,14 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class CrankyRigidBodyController : MonoBehaviour
 {
+	private Color collided_c;
+	private Color sentinel;
+
+	public audioCollisionMngr sounds;
+	public AudioSource jump_sound;
+	public AudioSource walk_loop;
+	private bool walking;
+
 	public bool isDead = false;
 	public bool isFinished = false;
 
@@ -62,7 +70,10 @@ public class CrankyRigidBodyController : MonoBehaviour
 	private float capsuleRadius;
 
 	void Awake()
-	{  
+	{
+		sentinel = Color.gray;
+		collided_c = sentinel;
+		walking = false;
 		movement = Vector3.zero;
 
 		grounded = false;
@@ -124,6 +135,18 @@ public class CrankyRigidBodyController : MonoBehaviour
 		inputX = Input.GetAxis("Horizontal");
 		inputY = Input.GetAxis("Vertical");
 
+		if ((inputX != 0.0f || inputY != 0.0f) && grounded) {
+			walking = true;
+		} else {
+			walking = false;
+		}
+
+		if (walking && !walk_loop.isPlaying) {
+			walk_loop.Play ();
+		} else if (!walking) {
+			walk_loop.Stop ();
+		}
+
 		// limit the length to 1.0f
 		float length = Mathf.Sqrt(inputX * inputX + inputY * inputY);
 
@@ -174,6 +197,7 @@ public class CrankyRigidBodyController : MonoBehaviour
 				// jump button was pressed, do jump      
 				movement.y = JumpSpeed - GetComponent<Rigidbody>().velocity.y;
 				doJump = 2;
+				jump_sound.Play ();
 			}
 
 			else if (!touchingDynamic && Mathf.Approximately(inputX + inputY, 0.0f) && doJump < 2)
@@ -182,6 +206,8 @@ public class CrankyRigidBodyController : MonoBehaviour
 
 			GetComponent<Rigidbody>().AddForce(new Vector3(movement.x, movement.y, movement.z), ForceMode.VelocityChange);
 			groundedLastFrame = true;
+
+
 		}
 
 		else
@@ -298,6 +324,9 @@ public class CrankyRigidBodyController : MonoBehaviour
 		// reset the jump state if able
 		if (doJump == 3)
 			doJump = 0;
+		
+		collided_c = collision.gameObject.GetComponent<Renderer> ().material.color;
+		sounds.playColorClip (collided_c);
 	}
 
 	void OnCollisionStay(Collision collision)
@@ -321,6 +350,9 @@ public class CrankyRigidBodyController : MonoBehaviour
 				touchingDynamic = true;
 		}
 
+
+		sounds.stopColorClip (collided_c);
+		collided_c = sentinel;
 		contactPoints.Remove(collision.gameObject.GetInstanceID());
 	}
 

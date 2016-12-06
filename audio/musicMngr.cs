@@ -25,6 +25,7 @@ public class musicMngr : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void updateMusic(Color c) {
+		bang.Stop ();
 		bang.Play ();
 		if (c == Color.white) {
 			if (c_loop.volume == 0) {
@@ -55,7 +56,6 @@ public class musicMngr : MonoBehaviour {
 			}
 		} else if (c == Color.blue) {
 			if (b_loop.volume == 0) {
-				Debug.Log ("turn up blue");
 				b_loop.volume = 0.5f;
 				r_loop.volume = 0.0f;
 				g_loop.volume = 0.0f;

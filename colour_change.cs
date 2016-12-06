@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class colour_change : MonoBehaviour {
 
+	public musicMngr music;
 	// the call to update_objects in start is necessary, but i don't want flash to happen during start
 	private bool naive_flag;	
 	public flash flash_script;
@@ -95,6 +96,9 @@ public class colour_change : MonoBehaviour {
 		} else {
 			naive_flag = true;
 		}
+
+		music.updateMusic (lite.color);
+
 		foreach (Transform rend in Platforms) {
 			string cooler = rend.tag;
 			if (cooler == "white") {

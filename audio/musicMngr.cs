@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class musicMngr : MonoBehaviour {
-	public AudioSource theme;
+	public float music_volume;
 
+	public AudioSource theme;
 	public AudioSource c_loop;
 	public AudioSource r_loop;
 	public AudioSource g_loop;
@@ -12,7 +13,7 @@ public class musicMngr : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		theme.Play ();
-		theme.volume = 0.5f;
+		theme.volume = music_volume;
 		c_loop.Play ();
 		c_loop.volume = 0.0f;
 		r_loop.Play ();
@@ -26,10 +27,11 @@ public class musicMngr : MonoBehaviour {
 	// Update is called once per frame
 	public void updateMusic(Color c) {
 		bang.Stop ();
+		bang.volume = music_volume;
 		bang.Play ();
 		if (c == Color.white) {
 			if (c_loop.volume == 0) {
-				c_loop.volume = 0.5f;
+				c_loop.volume = music_volume;
 				r_loop.volume = 0.0f;
 				g_loop.volume = 0.0f;
 				b_loop.volume = 0.0f;
@@ -38,7 +40,7 @@ public class musicMngr : MonoBehaviour {
 			}
 		} else if (c == Color.red) {
 			if (r_loop.volume == 0) {
-				r_loop.volume = 0.5f;
+				r_loop.volume = music_volume;
 				c_loop.volume = 0.0f;
 				g_loop.volume = 0.0f;
 				b_loop.volume = 0.0f;
@@ -47,7 +49,7 @@ public class musicMngr : MonoBehaviour {
 			}
 		} else if (c == Color.green) {
 			if (g_loop.volume == 0) {
-				g_loop.volume = 0.5f;
+				g_loop.volume = music_volume;
 				r_loop.volume = 0.0f;
 				c_loop.volume = 0.0f;
 				b_loop.volume = 0.0f;
@@ -56,7 +58,7 @@ public class musicMngr : MonoBehaviour {
 			}
 		} else if (c == Color.blue) {
 			if (b_loop.volume == 0) {
-				b_loop.volume = 0.5f;
+				b_loop.volume = music_volume;
 				r_loop.volume = 0.0f;
 				g_loop.volume = 0.0f;
 				c_loop.volume = 0.0f;

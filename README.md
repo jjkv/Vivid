@@ -1,3 +1,5 @@
+jjkv: i'm 'jack', new account :D
+
 11/18/16 jack update:
 scripts and an explanation can be found in my update. i implemented the
 game manager, fixed some physics bugs, cleaned up lens enabling, updated
